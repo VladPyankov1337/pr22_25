@@ -78,6 +78,41 @@
             error: AjaxError
         });
     });
+
+    $(".count").children(".min").click(function() {
+        var idItem = $(this).parent().parent().children('.button').attr('id');
+        var count = $(this).parent().children('.text').text();
+        count--;
+        if (count == 0){
+            $(this).parent().children(".button").show();
+            $(this).parent().children(".count").hide();
+        } else{
+            $(this).parent().children('.text').text(count);
+        }
+        $.ajax({
+            url: '@Url.Action("BasketCount", "Items")',
+            contentType: "application/json; charset=utf-8",
+            data: { idItem: $(this).attr('id') },
+            dataType: "json",
+            success: SuccessBasket,
+            error: AjaxError
+        });
+    });
+
+    $(".count").children(".max").click(function() {
+        var idItem = $(this).parent().parent().children('.button').attr('id');
+        var count = $(this).parent().children('.text').text();
+        count++;
+        $(this).parent().children('.text').text(count);
+        $.ajax({
+            url: '@Url.Action("BasketCount", "Items")',
+            contentType: "application/json; charset=utf-8",
+            data: { idItem: $(this).attr('id') },
+            dataType: "json",
+            success: SuccessBasket,
+            error: AjaxError
+        });
+    });
     function SuccessBasket(data){
         console.log(data);
     }

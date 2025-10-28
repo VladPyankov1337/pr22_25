@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 using Shop.Data.Interfaces;
 using Shop.Data.Models;
 using Shop.Data.ViewModell;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Extensions.Hosting.Internal;
+using System.Linq;
 
 namespace Shop.Controllers
 {
@@ -96,9 +97,13 @@ namespace Shop.Controllers
             IAllItems.Delete(id);
             return Redirect("/Items/List");
         }
-        public ActionResult Basket(int idItem)
+        public ActionResult Basket(int idItem = -1)
         {
-            return Json(true);
+            if (idItem != -1)
+            {
+                Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x => x.Id == idItem).First()));
+            }
+            return Json(Startup.BasketItem);
         }
     }
 }
