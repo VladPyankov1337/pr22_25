@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Shop.Data.Interfaces;
+using Shop.Data.Mocks;
 
 namespace Shop
 {
@@ -8,7 +10,9 @@ namespace Shop
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddTransient<ICategorys, MockCategorys>();
+            services.AddTransient<IItems, MockItems>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -17,6 +21,7 @@ namespace Shop
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+
         }
     }
 }
