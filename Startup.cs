@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Shop.Data.DataBase;
 using Shop.Data.Interfaces;
-using Shop.Data.Mocks;
 
 namespace Shop
 {
@@ -10,8 +10,8 @@ namespace Shop
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICategorys, MockCategorys>();
-            services.AddTransient<IItems, MockItems>();
+            services.AddTransient<ICategorys, DBCategory>();
+            services.AddTransient<IItems, DBItems>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
