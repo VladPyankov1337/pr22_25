@@ -96,5 +96,9 @@ namespace Shop.Controllers
             IAllItems.Delete(id);
             return Redirect("/Items/List");
         }
+        public ActionResult Basket(int idItem)
+        {
+            return Json(true);
+        }
     }
 }
