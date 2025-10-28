@@ -40,6 +40,10 @@
                     <p>Категория: @item.Category.Name</p>
                     <p>Описание: @item.Description</p>
                 </div>
+                <div class="actions">
+                    <a href="/Items/Update/@item.Id">Редактировать</a>
+                    <a href="/Items/Delete/@item.Id" onclick="return confirm('Вы уверены?')">Удалить</a>
+                </div>
             </div>
         }
     }

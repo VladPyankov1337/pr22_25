@@ -7,5 +7,8 @@ namespace Shop.Data.Interfaces
     {
         IEnumerable<Items> AllItems { get; }
         int Add(Items newItems);
+        bool Update(Items Item);
+        bool Delete(int id);
+        Items GetItemById(int id);
     }
 }

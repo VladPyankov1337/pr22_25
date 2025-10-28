@@ -68,5 +68,20 @@ namespace Shop.Data.Mocks
         {
             return 0;
         }
+
+        public bool Update(Items Item)
+        {
+            return false;
+        }
+
+        public bool Delete(int id)
+        {
+            return false;
+        }
+
+        public Items GetItemById(int id)
+        {
+            return null;
+        }
     }
 }

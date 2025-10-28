@@ -32,6 +32,7 @@ body {
 .item {
     box-shadow: 2px 2px 2px #00000038;
     margin-bottom: 10px;
+    padding: 15px;
 }
 
     .item img {
@@ -43,7 +44,6 @@ body {
     .item .data {
         margin-left: 120px;
         padding-top: 5px;
-        padding-bottom: 5px;
     }
 
 h3 {
@@ -142,3 +142,14 @@ select {
     background-color: white;
     margin-top: 10px;
 }
+
+.item .actions {
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+    .item .actions a {
+        margin-right: 10px;
+        color: #007eff;
+        text-decoration: none;
+    }

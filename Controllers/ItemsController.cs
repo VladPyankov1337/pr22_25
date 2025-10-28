@@ -61,5 +61,40 @@ namespace Shop.Controllers
             int id = IAllItems.Add(newItems);
             return Redirect("/Items/Update?id=" + id);
         }
+        [HttpGet]
+        public ViewResult Update(int id)
+        {
+            var item = IAllItems.GetItemById(id);
+            ViewBag.Categories = IAllCategorys.AllCategorys;
+            return View(item);
+        }
+
+        [HttpPost]
+        public RedirectResult Update(int id, string name, string description, IFormFile files, float price, int idCategory)
+        {
+            var item = IAllItems.GetItemById(id);
+
+            if (files != null)
+            {
+                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                var filePath = Path.Combine(uploads, files.FileName);
+                files.CopyTo(new FileStream(filePath, FileMode.Create));
+                item.Image = files.FileName;
+            }
+
+            item.Name = name;
+            item.Description = description;
+            item.Price = Convert.ToInt32(price);
+            item.Category = new Categorys() { Id = idCategory };
+
+            IAllItems.Update(item);
+            return Redirect("/Items/List");
+        }
+
+        public RedirectResult Delete(int id)
+        {
+            IAllItems.Delete(id);
+            return Redirect("/Items/List");
+        }
     }
 }

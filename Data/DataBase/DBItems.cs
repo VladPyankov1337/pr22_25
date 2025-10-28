@@ -54,5 +54,51 @@ namespace Shop.Data.DataBase
             MySqlConnection.Close();
             return IdItem;
         }
+        public bool Update(Items Item)
+        {
+            MySqlConnection MySqlConnection = Connection.OpenConnection();
+            Connection.Query(
+                $"UPDATE `items` SET `Name`='{Item.Name}', `Description`='{Item.Description}', " +
+                $"`Img`='{Item.Image}', `Price`={Item.Price}, `IdCategorys`={Item.Category.Id} " +
+                $"WHERE `Id`={Item.Id};",
+                MySqlConnection);
+            MySqlConnection.Close();
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            MySqlConnection MySqlConnection = Connection.OpenConnection();
+            Connection.Query(
+                $"DELETE FROM `items` WHERE `Id`={id};",
+                MySqlConnection);
+            MySqlConnection.Close();
+            return true;
+        }
+
+        public Items GetItemById(int id)
+        {
+            MySqlConnection MySqlConnection = Connection.OpenConnection();
+            MySqlDataReader dataReader = Connection.Query(
+                $"SELECT * FROM `items` WHERE `Id`={id};",
+                MySqlConnection);
+
+            Items item = null;
+            if (dataReader.HasRows)
+            {
+                dataReader.Read();
+                item = new Items()
+                {
+                    Id = dataReader.IsDBNull(0) ? -1 : dataReader.GetInt32(0),
+                    Name = dataReader.IsDBNull(1) ? "" : dataReader.GetString(1),
+                    Description = dataReader.IsDBNull(2) ? "" : dataReader.GetString(2),
+                    Image = dataReader.IsDBNull(3) ? "" : dataReader.GetString(3),
+                    Price = dataReader.IsDBNull(4) ? -1 : dataReader.GetInt32(4),
+                    Category = dataReader.IsDBNull(5) ? null : Categorys.Where(x => x.Id == dataReader.GetInt32(5)).First()
+                };
+            }
+            MySqlConnection.Close();
+            return item;
+        }
     }
 }
