@@ -64,5 +64,9 @@ namespace Shop.Data.Mocks
                 };
             }
         }
+        public int Add(Items Item)
+        {
+            return 0;
+        }
     }
 }

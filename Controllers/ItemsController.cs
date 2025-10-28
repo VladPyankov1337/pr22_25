@@ -43,7 +43,7 @@ namespace Shop.Controllers
             return View(Categorys);
         }
 
-        [HttpGet]
+        [HttpPost]
         public RedirectResult Add(string name, string description, IFormFile files, float price, int idCategory)
         {
             if (files != null)

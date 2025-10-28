@@ -33,5 +33,26 @@ namespace Shop.Data.DataBase
                 return items;
             }
         }
+        public int Add(Items Item)
+        {
+            MySqlConnection MySqlConnection = Connection.OpenConnection();
+            Connection.Query(
+                $"INSERT INTO `items` (`Name`,`Description`,`Img`,`Price`,`IdCategorys`) VALUES ('{Item.Name}', '{Item.Description}', '{Item.Image}', {Item.Price},{Item.Category.Id});",
+                MySqlConnection);
+            MySqlConnection.Close();
+
+            int IdItem = -1;
+            MySqlConnection = Connection.OpenConnection();
+            MySqlDataReader dataReaderItem = Connection.Query(
+                $"SELECT `Id` FROM `items` WHERE `Name` = '{Item.Name}' AND `Description` = '{Item.Description}' AND `Price` = '{Item.Price}' AND `IdCategorys` = '{Item.Category.Id}' ;",
+                MySqlConnection);
+            if (dataReaderItem.HasRows)
+            {
+                dataReaderItem.Read();
+                IdItem = dataReaderItem.GetInt32(0);
+            }
+            MySqlConnection.Close();
+            return IdItem;
+        }
     }
 }

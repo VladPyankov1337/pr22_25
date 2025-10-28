@@ -6,5 +6,6 @@ namespace Shop.Data.Interfaces
     public interface IItems
     {
         IEnumerable<Items> AllItems { get; }
+        int Add(Items newItems);
     }
 }
